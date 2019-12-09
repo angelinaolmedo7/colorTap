@@ -10,12 +10,15 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    //Score for game
+    var score = 0
+    
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
+    private var scoreLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
     override func sceneDidLoad() {
@@ -23,8 +26,8 @@ class GameScene: SKScene {
         self.lastUpdateTime = 0
         
         // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
+        self.scoreLabel = self.childNode(withName: "//scoreLabel") as? SKLabelNode
+        if let label = self.scoreLabel {
             label.alpha = 0.0
             label.run(SKAction.fadeIn(withDuration: 2.0))
         }
@@ -69,7 +72,7 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
+        if let label = self.scoreLabel {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
         
