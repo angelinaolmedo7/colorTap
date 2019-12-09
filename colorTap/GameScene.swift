@@ -13,12 +13,22 @@ class GameScene: SKScene {
     //Score for game
     var score = 0
     
+    enum Colors:String, CaseIterable {
+        case red = "RED"
+        case orange = "ORANGE"
+        case yellow = "YELLOW"
+        case green = "GREEN"
+        case blue = "BLUE"
+        case purple = "PURPLE"
+    }
+    
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
     private var scoreLabel : SKLabelNode?
+    private var textLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
     override func sceneDidLoad() {
@@ -30,6 +40,13 @@ class GameScene: SKScene {
         if let label = self.scoreLabel {
             label.alpha = 0.0
             label.run(SKAction.fadeIn(withDuration: 2.0))
+        }
+        
+        // Label to hold the text-accurate color
+        self.textLabel = self.childNode(withName: "//textLabel") as? SKLabelNode
+        if let text = self.textLabel {
+            text.alpha = 0.0
+            text.run(SKAction.fadeIn(withDuration: 2.0))
         }
         
         // Create shape node to use during mouse interaction
@@ -72,11 +89,16 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let colorChoice = Colors.allCases.randomElement()!
         if let label = self.scoreLabel {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
             score += 10
             label.text = "Score: \(score)"
-        }
+            }
+        if let text = self.textLabel {
+            text.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+            text.text = "\(colorChoice.rawValue)"
+            }
         
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
