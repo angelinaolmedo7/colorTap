@@ -22,16 +22,20 @@ class GameScene: SKScene {
         case purple = "PURPLE"
     }
     
-    
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
     private var scoreLabel : SKLabelNode?
     private var textLabel : SKLabelNode?
+    private var colorLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    var colorChoice = Colors.allCases.randomElement()!
+    var textColorChoice = Colors.allCases.randomElement()!
+    
     override func sceneDidLoad() {
+        
 
         self.lastUpdateTime = 0
         
@@ -89,18 +93,50 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let colorChoice = Colors.allCases.randomElement()!
-        if let label = self.scoreLabel {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-            score += 10
-            label.text = "Score: \(score)"
+        //see if correct answer
+        for touch in touches {
+            //keeping the fancy spinner thing :)
+            self.touchDown(atPoint: touch.location(in: self))
+            
+            //selected a yes/no button
+            let positionInScene = touch.location(in: self)
+            
+            //Find the name for the node in that location
+            let name = self.atPoint(positionInScene).name
+            //print(name)
+            
+            //Check if there is an node there.
+            if name == "yesButton" || name == "yesLabel" {
+                //if yes is correct increase score
+                if let label = self.scoreLabel {
+                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+                score += 10
+                label.text = "Score: \(score)"
+                }
             }
+            else if name == "noButton" || name == "noLabel" {
+                //if no is correct increase score
+                if let label = self.scoreLabel {
+                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+                score += 10
+                label.text = "Score: \(score)"
+                }
+            }
+        }
+        //set up next question
+        colorChoice = Colors.allCases.randomElement()!
+        
         if let text = self.textLabel {
             text.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
             text.text = "\(colorChoice.rawValue)"
             }
+        if let color = self.colorLabel {
+            color.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+            color.text = "\(Colors.allCases.randomElement()!.rawValue)"
+            //color.fontColor = UIColor
+        }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+            
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
