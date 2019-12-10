@@ -22,6 +22,15 @@ class GameScene: SKScene {
         case purple = "PURPLE"
     }
     
+    var colorDict: [Colors: UIColor] = [
+        Colors.red : UIColor.red,
+        Colors.orange : UIColor.orange,
+        Colors.yellow : UIColor.yellow,
+        Colors.green : UIColor.green,
+        Colors.blue : UIColor.blue,
+        Colors.purple : UIColor.purple
+    ]
+    
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
@@ -31,6 +40,7 @@ class GameScene: SKScene {
     private var colorLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    //instance vars
     var colorChoice = Colors.allCases.randomElement()!
     var textColorChoice = Colors.allCases.randomElement()!
     
@@ -49,8 +59,18 @@ class GameScene: SKScene {
         // Label to hold the text-accurate color
         self.textLabel = self.childNode(withName: "//textLabel") as? SKLabelNode
         if let text = self.textLabel {
+            text.text = self.colorChoice.rawValue
             text.alpha = 0.0
             text.run(SKAction.fadeIn(withDuration: 2.0))
+        }
+        
+        // Label to hold the color-accurate color
+        self.colorLabel = self.childNode(withName: "//colorLabel") as? SKLabelNode
+        if let color = self.colorLabel {
+            color.alpha = 0.0
+            color.fontColor = colorDict[textColorChoice]
+            color.text = "\(Colors.allCases.randomElement()!.rawValue)"
+            color.run(SKAction.fadeIn(withDuration: 2.0))
         }
         
         // Create shape node to use during mouse interaction
@@ -109,22 +129,38 @@ class GameScene: SKScene {
             if name == "yesButton" || name == "yesLabel" {
                 //if yes is correct increase score
                 if let label = self.scoreLabel {
-                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-                score += 10
-                label.text = "Score: \(score)"
+                    label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+                    if colorChoice == textColorChoice {
+                        score += 10
+                    }
+                    else {
+                        score -= 10
+                    }
+                    label.text = "Score: \(score)"
+                    nextSet()
                 }
             }
             else if name == "noButton" || name == "noLabel" {
                 //if no is correct increase score
                 if let label = self.scoreLabel {
-                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-                score += 10
-                label.text = "Score: \(score)"
+                    label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+                    if colorChoice != textColorChoice {
+                        score += 10
+                    }
+                    else {
+                        score -= 10
+                    }
+                    label.text = "Score: \(score)"
+                    nextSet()
                 }
             }
         }
+    }
+    
+    func nextSet () {
         //set up next question
         colorChoice = Colors.allCases.randomElement()!
+        textColorChoice = Colors.allCases.randomElement()!
         
         if let text = self.textLabel {
             text.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
@@ -133,10 +169,8 @@ class GameScene: SKScene {
         if let color = self.colorLabel {
             color.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
             color.text = "\(Colors.allCases.randomElement()!.rawValue)"
-            //color.fontColor = UIColor
+            color.fontColor = colorDict[textColorChoice]
         }
-        
-            
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
