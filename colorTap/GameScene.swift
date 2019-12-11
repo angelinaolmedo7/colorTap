@@ -38,7 +38,11 @@ class GameScene: SKScene {
     private var scoreLabel : SKLabelNode?
     private var textLabel : SKLabelNode?
     private var colorLabel : SKLabelNode?
+    private var timeLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+    
+    var timer:Timer?
+    var timeLeft = 60
     
     //return to start screen when game finished
     //let startScene = SKScene(fileNamed: "startScene")!
@@ -77,6 +81,13 @@ class GameScene: SKScene {
             color.run(SKAction.fadeIn(withDuration: 2.0))
         }
         
+        //timer label
+        self.timeLabel = self.childNode(withName: "//timeLabel") as? SKLabelNode
+        if let time = self.textLabel {
+            time.alpha = 0.0
+            time.run(SKAction.fadeIn(withDuration: 2.0))
+        }
+        
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
         self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
@@ -89,8 +100,44 @@ class GameScene: SKScene {
                                               SKAction.fadeOut(withDuration: 0.5),
                                               SKAction.removeFromParent()]))
         }
+        
+        //start timer
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
     
+    //when the time left changes
+    @objc func onTimerFires()
+    {
+        timeLeft -= 1
+        
+        timeLabel!.text = "Time Remaining: \(timeLeft)"
+
+        if timeLeft <= 0 {
+            timer!.invalidate()
+            timer = nil
+            endGame()
+        }
+    }
+    
+    func endGame() {
+        if let scene = GKScene(fileNamed: "startScene") {
+            // Get the SKScene from the loaded GKScene
+            if let sceneNode = scene.rootNode as! SKScene? {
+                // Set the scale mode to scale to fit the window
+                sceneNode.scaleMode = .aspectFill
+                
+                // Present the scene
+                if let view = self.view as! SKView? {
+                    view.presentScene(sceneNode)
+                    
+                    view.ignoresSiblingOrder = true
+                    
+                    view.showsFPS = true
+                    view.showsNodeCount = true
+                }
+            }
+        }
+    }
     
     func touchDown(atPoint pos : CGPoint) {
         if let n = self.spinnyNode?.copy() as! SKShapeNode? {
