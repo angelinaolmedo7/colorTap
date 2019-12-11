@@ -15,6 +15,8 @@
 		2965E0E2239E24D700E7F9F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2965E0E0239E24D700E7F9F4 /* Main.storyboard */; };
 		2965E0E4239E24DC00E7F9F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2965E0E3239E24DC00E7F9F4 /* Assets.xcassets */; };
 		2965E0E7239E24DC00E7F9F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2965E0E5239E24DC00E7F9F4 /* LaunchScreen.storyboard */; };
+		2965E0EF23A06F5100E7F9F4 /* startScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2965E0EE23A06F5100E7F9F4 /* startScene.swift */; };
+		2965E0F123A06F9200E7F9F4 /* startScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2965E0F023A06F9200E7F9F4 /* startScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		2965E0E3239E24DC00E7F9F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2965E0E6239E24DC00E7F9F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2965E0E8239E24DC00E7F9F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2965E0EE23A06F5100E7F9F4 /* startScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startScene.swift; sourceTree = "<group>"; };
+		2965E0F023A06F9200E7F9F4 /* startScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = startScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				2965E0E3239E24DC00E7F9F4 /* Assets.xcassets */,
 				2965E0E5239E24DC00E7F9F4 /* LaunchScreen.storyboard */,
 				2965E0E8239E24DC00E7F9F4 /* Info.plist */,
+				2965E0EE23A06F5100E7F9F4 /* startScene.swift */,
+				2965E0F023A06F9200E7F9F4 /* startScene.sks */,
 			);
 			path = colorTap;
 			sourceTree = "<group>";
@@ -136,6 +142,7 @@
 				2965E0E4239E24DC00E7F9F4 /* Assets.xcassets in Resources */,
 				2965E0E7239E24DC00E7F9F4 /* LaunchScreen.storyboard in Resources */,
 				2965E0DB239E24D700E7F9F4 /* Actions.sks in Resources */,
+				2965E0F123A06F9200E7F9F4 /* startScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +156,7 @@
 				2965E0DD239E24D700E7F9F4 /* GameScene.swift in Sources */,
 				2965E0DF239E24D700E7F9F4 /* GameViewController.swift in Sources */,
 				2965E0D7239E24D700E7F9F4 /* AppDelegate.swift in Sources */,
+				2965E0EF23A06F5100E7F9F4 /* startScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,6 +40,10 @@ class GameScene: SKScene {
     private var colorLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    //return to start screen when game finished
+    //let startScene = SKScene(fileNamed: "startScene")!
+    //let transition = SKTransition.moveIn(with: .right, duration: 1)
+    
     //instance vars
     var colorChoice = Colors.allCases.randomElement()!
     var textColorChoice = Colors.allCases.randomElement()!
